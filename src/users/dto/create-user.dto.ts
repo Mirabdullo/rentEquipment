@@ -14,7 +14,7 @@ export class CreateUserDto {
     readonly password: string
 
     @IsNotEmpty()
-    @IsString({message: "Parol satr bo'lishi kerak"})
+    @IsString({message: "Telefon raqam satr bo'lishi kerak"})
     readonly phone_number: string
 
     @IsString({message: "Adress satr bo'lishi kerak"})

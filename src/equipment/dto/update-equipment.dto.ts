@@ -19,7 +19,7 @@ export class UpdateEquipmentDto {
 
     @IsOptional()
     @IsNumber({},{message: "User idsi bo'lishi kerak"})
-    readonly user_id: string
+    readonly user_id: number
 
     @IsOptional()
     @IsString({message: "Instrument infosi satr bo'lishi kerak"})

@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { Column, DataType, Table, Model, BelongsToMany, HasMany, BelongsTo} from "sequelize-typescript"
+import { Column, DataType, Table, Model, BelongsToMany, HasMany, BelongsTo, ForeignKey} from "sequelize-typescript"
 import { Equipment } from "src/equipment/equipment.model"
 import { User } from "src/users/users.model"
 
@@ -22,13 +22,16 @@ export class Comment extends Model<Comment, CommentCreationAttrs> {
     id: number
 
     @ApiProperty({example: '1', description: "Instrumentning idsi"})
+    @ForeignKey(() => Equipment)
     @Column({
         type: DataType.INTEGER,
         allowNull: false
     })
     equipment_id: number
 
+    
     @ApiProperty({example: '1', description: "Userning idsi"})
+    @ForeignKey(() => User)
     @Column({
         type: DataType.INTEGER,
         allowNull: false

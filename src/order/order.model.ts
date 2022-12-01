@@ -1,11 +1,11 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { Column, DataType, Table, Model, BelongsToMany, BelongsTo} from "sequelize-typescript"
+import { Column, DataType, Table, Model, BelongsToMany, BelongsTo, ForeignKey} from "sequelize-typescript"
 import { Equipment } from "src/equipment/equipment.model"
 import { User } from "src/users/users.model"
 
 interface OrderCreationAttrs {
-    equipment_id: string
-    user_id: string,
+    equipment_id: number
+    user_id: number,
 }
 
 @Table({tableName: 'order'})
@@ -19,19 +19,21 @@ export class Order extends Model<Order, OrderCreationAttrs> {
     })
     id: number
 
-    @ApiProperty({example: 'Order1', description: "Foydalanuvchi ismi"})
+    @ApiProperty({example: '2', description: "Instrument idsi"})
+    @ForeignKey(() => Equipment)
     @Column({
         type: DataType.INTEGER,
         allowNull: false
     })
     equipment_id: number
 
-    @ApiProperty({example: 'Order@gmail.com', description: "Foydalanuvchi elektron pochtasi"})
+    @ApiProperty({example: '3', description: "Foydalanuvchi idsi"})
+    @ForeignKey(() => User)
     @Column({
         type: DataType.INTEGER,
         allowNull: false
     })
-    user_id: string
+    user_id: number
 
     @ApiProperty({example: '25.03.2023', description: "Kelishuv boshlangan sana"})
     @Column({
@@ -48,8 +50,7 @@ export class Order extends Model<Order, OrderCreationAttrs> {
 
     @ApiProperty({example: 'true', description: "Active Foydalanuvchimi yoki yo'q"})
     @Column({
-        type: DataType.DECIMAL,
-        defaultValue: false,
+        type: DataType.INTEGER,
     })
     total_price: number
 

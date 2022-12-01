@@ -11,14 +11,14 @@ async function start() {
     app.useGlobalPipes(new ValidationPipe());
 
     const config = new DocumentBuilder()
-      .setTitle('NestJs Test')
+      .setTitle('RentEquipment')
       .setDescription('Rest Api')
       .setVersion('1.0.0')
       .addTag('NodeJs, NestJs, Postgres, Sequalize')
       .build();
 
     const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('/api/docs', app, document);
+    SwaggerModule.setup('/api/docs/rentEquipment', app, document);
 
     await app.listen(PORT, () => {
       console.log(`Server ${PORT}- portda ishga tushdi`);

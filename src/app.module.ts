@@ -7,6 +7,10 @@ import { CommentModule } from './comment/comment.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { resolve } from 'path';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { User } from './users/users.model';
+import { Order } from './order/order.model';
+import { Equipment } from './equipment/equipment.model';
+import { Comment } from './comment/comment.model';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -23,7 +27,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
     username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
-    models: [],
+    models: [User,Order,Equipment,Comment],
     autoLoadModels: true,
     logging: false
   }),

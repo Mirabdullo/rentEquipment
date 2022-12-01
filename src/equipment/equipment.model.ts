@@ -1,10 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { Column, DataType, Table, Model, BelongsToMany, HasMany} from "sequelize-typescript"
+import { Column, DataType, Table, Model, BelongsToMany, HasMany, ForeignKey} from "sequelize-typescript"
 import { Comment } from "src/comment/comment.model"
+import { User } from "src/users/users.model"
 
 interface EquipmentCreationAttrs {
     name: string
     email: string
+    image: string
     password: string
     phone_number: string
 }
@@ -37,7 +39,6 @@ export class Equipment extends Model<Equipment, EquipmentCreationAttrs> {
     @ApiProperty({example: 'default.jpeg', description: "Instrument fotosurati"})
     @Column({
         type: DataType.STRING,
-        allowNull: false,
     })
     image: string
 
@@ -48,7 +49,7 @@ export class Equipment extends Model<Equipment, EquipmentCreationAttrs> {
     })
     total_rating: number
 
-    @ApiProperty({example: 'true', description: "Foydalanuvchimi admin yoki yo'q"})
+    @ApiProperty({example: 'true', description: "User idsi"})
     @Column({
         type:DataType.INTEGER,
         allowNull: false
@@ -56,6 +57,7 @@ export class Equipment extends Model<Equipment, EquipmentCreationAttrs> {
     user_id: number
 
     @ApiProperty({example: 'Drel haqida', description: "Drel haqida ma'lumot"})
+    @ForeignKey(() => User)
     @Column({
         type: DataType.STRING,
         allowNull: false
@@ -69,4 +71,6 @@ export class Equipment extends Model<Equipment, EquipmentCreationAttrs> {
 
     @HasMany(() => Comment)
     comments: Comment[]
+
+    
 }
