@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger"
 import { Column, DataType, Table, Model, BelongsToMany, HasMany} from "sequelize-typescript"
+import { Comment } from "src/comment/comment.model"
 
 interface EquipmentCreationAttrs {
     name: string
@@ -66,6 +67,6 @@ export class Equipment extends Model<Equipment, EquipmentCreationAttrs> {
     @Column({defaultValue: false})
     is_active: boolean
 
-    // @HasMany(() => Commen)
-    // comments: Comment[]
+    @HasMany(() => Comment)
+    comments: Comment[]
 }

@@ -1,15 +1,17 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { Column, DataType, Table, Model, BelongsToMany, HasMany} from "sequelize-typescript"
+import { Column, DataType, Table, Model, BelongsToMany, HasMany, BelongsTo} from "sequelize-typescript"
+import { Equipment } from "src/equipment/equipment.model"
+import { User } from "src/users/users.model"
 
-interface EquipmentCreationAttrs {
-    name: string
-    email: string
-    password: string
-    phone_number: string
+interface CommentCreationAttrs {
+    equipment_id: string
+    user_id: string
+    comment: string
+    rating: string
 }
 
-@Table({tableName: 'equipment'})
-export class Equipment extends Model<Equipment, EquipmentCreationAttrs> {
+@Table({tableName: 'comment'})
+export class Comment extends Model<Comment, CommentCreationAttrs> {
     @ApiProperty({example: '1', description: "Unikal ID"})
     @Column({
         type: DataType.INTEGER,
@@ -19,53 +21,45 @@ export class Equipment extends Model<Equipment, EquipmentCreationAttrs> {
     })
     id: number
 
-    @ApiProperty({example: 'Drel', description: "Instrumentning nomi"})
-    @Column({
-        type: DataType.STRING,
-        allowNull: false
-    })
-    name: string
-
-    @ApiProperty({example: '50000', description: "Instrumentning kunli narxi"})
+    @ApiProperty({example: '1', description: "Instrumentning idsi"})
     @Column({
         type: DataType.INTEGER,
         allowNull: false
     })
-    price: number
+    equipment_id: number
+
+    @ApiProperty({example: '1', description: "Userning idsi"})
+    @Column({
+        type: DataType.INTEGER,
+        allowNull: false
+    })
+    user_id: number
 
     @ApiProperty({example: 'default.jpeg', description: "Instrument fotosurati"})
     @Column({
         type: DataType.STRING,
         allowNull: false,
     })
-    image: string
+    comment: string
 
     @ApiProperty({example: '1', description: "Instrumentning bahosi(1-5)"})
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
     })
-    total_rating: number
+    rating: number
 
-    @ApiProperty({example: 'true', description: "Foydalanuvchimi admin yoki yo'q"})
+
+
     @Column({
-        type:DataType.INTEGER,
-        allowNull: false
+        type: DataType.DATE,
+        defaultValue: new Date()
     })
-    user_id: number
+    createdAt: Date
 
-    @ApiProperty({example: 'Drel haqida', description: "Drel haqida ma'lumot"})
-    @Column({
-        type: DataType.STRING,
-        allowNull: false
-    })
-    description: string
+    @BelongsTo(() => User)
+    user: User
 
-
-    @ApiProperty({example: 'true', description: "Active Foydalanuvchimi yoki yo'q"})
-    @Column({defaultValue: false})
-    is_active: boolean
-
-    // @HasMany(() => Commen)
-    // comments: Comment[]
+    @BelongsTo(() => Equipment)
+    equipment: Equipment
 }

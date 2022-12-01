@@ -1,5 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { Column, DataType, Table, Model, BelongsToMany} from "sequelize-typescript"
+import { Column, DataType, Table, Model, BelongsToMany, BelongsTo} from "sequelize-typescript"
+import { Equipment } from "src/equipment/equipment.model"
+import { User } from "src/users/users.model"
 
 interface OrderCreationAttrs {
     equipment_id: string
@@ -51,6 +53,9 @@ export class Order extends Model<Order, OrderCreationAttrs> {
     })
     total_price: number
 
-    // @BelongsToMany(()=>Role, () => OrderRoles)
-    // roles: Role[]
+    @BelongsTo(() => User)
+    user: User
+
+    @BelongsTo(() => Equipment)
+    equipment: Equipment
 }
